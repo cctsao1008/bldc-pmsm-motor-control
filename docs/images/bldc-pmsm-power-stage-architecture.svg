@@ -1,60 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-<rect width="1600" height="1000" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
 <title id="title">BLDC / PMSM Power Stage Architecture</title>
-<desc id="desc">Three-phase six-switch inverter with 6-PWM gate drive, three-shunt INA181 current sensing, Hall sensing, back-EMF sensing using LM339, and DC-bus voltage sensing.</desc>
+<desc id="desc">External 6-PWM inputs drive three half bridges forming a three-phase six-switch inverter. Phase outputs MA, MB and MC are independent nodes. Each low-side leg returns through a one milliohm shunt.</desc>
+<rect width="1600" height="900" fill="#fff"/>
 <style>
-text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;fill:#172033}.title{font-size:44px;font-weight:700}.subtitle{font-size:25px;fill:#374151}.section{font-size:20px;font-weight:700}.label{font-size:16px;font-weight:600}.small{font-size:14px}.tiny{font-size:12px}.muted{fill:#556071}.box{fill:#ffffff;stroke:#a8b1bf;stroke-width:1.5}.dash{fill:none;stroke:#a8b1bf;stroke-width:1.4;stroke-dasharray:7 6}.wire{fill:none;stroke:#202733;stroke-width:2}.sig{fill:none;stroke:#173b8f;stroke-width:2}.sense{fill:none;stroke:#147a38;stroke-width:2}.hall{fill:none;stroke:#d86400;stroke-width:2}.bemf{fill:none;stroke:#6f238b;stroke-width:2}.bus{fill:none;stroke:#173b8f;stroke-width:2}.node{fill:#202733}.term{fill:#fff;stroke:#202733;stroke-width:1.5}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;fill:#172033}.title{font-size:54px;font-weight:700}.subtitle{font-size:30px;fill:#374151}.section{font-size:25px;font-weight:700}.label{font-size:22px;font-weight:600}.small{font-size:18px;fill:#556071}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.wire{fill:none;stroke:#202733;stroke-width:3}.sig{fill:none;stroke:#173b8f;stroke-width:3}.box{fill:#fff;stroke:#173b8f;stroke-width:2.4}.powerbox{fill:#fff;stroke:#d72c2c;stroke-width:2.6}.node{fill:#202733}.term{fill:#fff;stroke:#202733;stroke-width:2}
 </style>
 <defs>
-<marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#173b8f" stroke-width="1.6"/></marker>
-<marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#147a38" stroke-width="1.6"/></marker>
-<marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#d86400" stroke-width="1.6"/></marker>
-<marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#6f238b" stroke-width="1.6"/></marker>
-<g id="mosfet"><rect x="-18" y="-28" width="36" height="56" rx="3" fill="#fff" stroke="#202733" stroke-width="1.5"/><path d="M-34 0h11M-12-16v32M-4-18v36M-4-18h12M-4 18h12" class="wire"/><path d="M8-18v9M8 9v9" class="wire"/><path d="M4 7l8-12h-8z" fill="#202733"/></g>
-<g id="resistor"><path d="M0 0l6-8 10 16 10-16 10 16 10-16 6 8" class="wire"/></g>
+<marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#173b8f" stroke-width="1.7"/></marker>
+<g id="fet"><rect x="-24" y="-42" width="48" height="84" rx="5" fill="#fff" stroke="#202733" stroke-width="2"/><path d="M-45 0h14M-17-24v48M-6-28v56M-6-28h18M-6 28h18" class="wire"/><path d="M12-28v16M12 12v16" class="wire"/><path d="M5 9l14-18H5z" fill="#202733"/></g>
+<g id="vshunt"><path d="M0 0v12l-12 12 24 18-24 18 24 18-24 18 12 12v12" class="wire"/></g>
 </defs>
-<text class="title" x="800" y="55" text-anchor="middle">BLDC / PMSM Power Stage Architecture</text>
-<text class="subtitle" x="800" y="91" text-anchor="middle">6-PWM Gate Drive + Current / Hall / BEMF / Bus-Voltage Sensing</text>
-<text class="section" x="42" y="140" fill="#173b8f">PWM INPUTS</text>
-<text class="small muted" x="42" y="163">from external controller</text>
-<rect class="box" x="195" y="210" width="155" height="300" rx="12" stroke="#173b8f"/>
-<text class="section" x="272" y="333" text-anchor="middle" fill="#173b8f">3× Half-Bridge</text>
-<text class="section" x="272" y="359" text-anchor="middle" fill="#173b8f">Gate Driver</text>
-<g class="label mono"><text x="45" y="232">INHA</text><text x="45" y="282">INLA</text><text x="45" y="332">INHB</text><text x="45" y="382">INLB</text><text x="45" y="432">INHC</text><text x="45" y="482">INLC</text></g>
-<g class="sig" marker-end="url(#arrowBlue)"><path d="M100 226H190"/><path d="M100 276H190"/><path d="M100 326H190"/><path d="M100 376H190"/><path d="M100 426H190"/><path d="M100 476H190"/></g>
-<g class="label mono" fill="#173b8f"><text x="366" y="238">HOA</text><text x="366" y="286">LOA</text><text x="366" y="334">HOB</text><text x="366" y="382">LOB</text><text x="366" y="430">HOC</text><text x="366" y="478">LOC</text></g>
-<g class="sig" marker-end="url(#arrowBlue)"><path d="M350 232H430"/><path d="M350 280H430"/><path d="M350 328H430"/><path d="M350 376H430"/><path d="M350 424H430"/><path d="M350 472H430"/></g>
-<rect x="430" y="125" width="610" height="500" rx="18" fill="#fff" stroke="#cc2b2b" stroke-width="2"/>
-<text class="section" x="735" y="153" text-anchor="middle" fill="#cc2b2b">THREE-PHASE POWER STAGE</text>
-<text class="small muted" x="735" y="175" text-anchor="middle">six-switch inverter</text>
-<text class="label" x="450" y="205">VM</text><circle class="term" cx="490" cy="199" r="6"/><path class="wire" d="M496 199H940"/>
-<text class="label" x="450" y="590">GND</text><circle class="term" cx="490" cy="584" r="6"/><path class="wire" d="M496 584H940"/>
-<path class="wire" d="M560 199V240M560 300V360M560 420V470M560 530V584"/><path class="wire" d="M735 199V240M735 300V360M735 420V470M735 530V584"/><path class="wire" d="M910 199V240M910 300V360M910 420V470M910 530V584"/>
-<use href="#mosfet" transform="translate(560 270)"/><use href="#mosfet" transform="translate(560 390)"/><use href="#mosfet" transform="translate(735 270)"/><use href="#mosfet" transform="translate(735 390)"/><use href="#mosfet" transform="translate(910 270)"/><use href="#mosfet" transform="translate(910 390)"/>
-<circle class="node" cx="560" cy="330" r="4"/><circle class="node" cx="735" cy="330" r="4"/><circle class="node" cx="910" cy="330" r="4"/><path class="wire" d="M560 330H995M735 330H995M910 330H995"/>
-<text class="label" x="520" y="327">MA</text><text class="label" x="695" y="327">MB</text><text class="label" x="870" y="327">MC</text>
-<text class="small mono" x="580" y="267">QHA</text><text class="small mono" x="580" y="387">QLA</text><text class="small mono" x="755" y="267">QHB</text><text class="small mono" x="755" y="387">QLB</text><text class="small mono" x="930" y="267">QHC</text><text class="small mono" x="930" y="387">QLC</text>
-<use href="#resistor" transform="translate(534 492) rotate(90)"/><use href="#resistor" transform="translate(709 492) rotate(90)"/><use href="#resistor" transform="translate(884 492) rotate(90)"/>
-<text class="small mono" x="578" y="500">R42</text><text class="small mono" x="578" y="519">1 mΩ</text><text class="small mono" x="753" y="500">R43</text><text class="small mono" x="753" y="519">1 mΩ</text><text class="small mono" x="928" y="500">R44</text><text class="small mono" x="928" y="519">1 mΩ</text>
-<path class="wire" d="M995 330L1038 350M995 330L1038 375M995 330L1038 400"/>
-<circle cx="1076" cy="375" r="38" fill="#fff" stroke="#202733" stroke-width="2"/><circle cx="1076" cy="375" r="29" fill="#f8fafc" stroke="#202733" stroke-width="1.4"/><text x="1076" y="384" text-anchor="middle" font-size="26" font-weight="700">M</text><text class="label" x="1076" y="430" text-anchor="middle">BLDC / PMSM</text><text class="small muted" x="1076" y="450" text-anchor="middle">motor</text>
-<rect x="1120" y="115" width="430" height="225" rx="15" fill="#fff" stroke="#147a38" stroke-width="1.8"/>
-<text class="section" x="1140" y="145" fill="#147a38">CURRENT SENSING</text><text class="small muted" x="1335" y="145">three-shunt low-side</text>
-<rect class="box" x="1190" y="170" width="135" height="42" rx="4"/><rect class="box" x="1190" y="220" width="135" height="42" rx="4"/><rect class="box" x="1190" y="270" width="135" height="42" rx="4"/>
-<text class="label mono" x="1257" y="197" text-anchor="middle">INA181A1</text><text class="label mono" x="1257" y="247" text-anchor="middle">INA181A1</text><text class="label mono" x="1257" y="297" text-anchor="middle">INA181A1</text>
-<path class="sense" d="M1325 191H1390" marker-end="url(#arrowGreen)"/><path class="sense" d="M1325 241H1390" marker-end="url(#arrowGreen)"/><path class="sense" d="M1325 291H1390" marker-end="url(#arrowGreen)"/>
-<text class="label mono" x="1405" y="197" fill="#147a38">ISA</text><text class="label mono" x="1405" y="247" fill="#147a38">ISB</text><text class="label mono" x="1405" y="297" fill="#147a38">ISC</text><text class="small muted" x="1190" y="328">REF1V65 = 1.65 V zero-current reference</text>
-<path class="wire" d="M560 520V665H1160V191H1190"/><path class="wire" d="M735 520V650H1145V241H1190"/><path class="wire" d="M910 520V635H1130V291H1190"/>
-<rect x="1120" y="355" width="430" height="160" rx="15" fill="#fff" stroke="#d86400" stroke-width="1.8"/>
-<text class="section" x="1140" y="385" fill="#d86400">HALL SENSING</text><rect class="box" x="1170" y="410" width="38" height="82" rx="4"/><circle class="term" cx="1189" cy="425" r="5"/><circle class="term" cx="1189" cy="449" r="5"/><circle class="term" cx="1189" cy="473" r="5"/>
-<path class="hall" d="M1208 425H1340" marker-end="url(#arrowOrange)"/><path class="hall" d="M1208 449H1340" marker-end="url(#arrowOrange)"/><path class="hall" d="M1208 473H1340" marker-end="url(#arrowOrange)"/>
-<text class="label mono" x="1355" y="431" fill="#d86400">HALLA</text><text class="label mono" x="1355" y="455" fill="#d86400">HALLB</text><text class="label mono" x="1355" y="479" fill="#d86400">HALLC</text><text class="small muted" x="1452" y="431">digital rotor-sector feedback</text>
-<rect x="1120" y="530" width="430" height="200" rx="15" fill="#fff" stroke="#6f238b" stroke-width="1.8"/>
-<text class="section" x="1140" y="560" fill="#6f238b">BACK-EMF SENSING</text><g class="small mono"><text x="1145" y="595">MA</text><text x="1145" y="630">MB</text><text x="1145" y="665">MC</text></g><g><use href="#resistor" transform="translate(1180 590)"/><use href="#resistor" transform="translate(1180 625)"/><use href="#resistor" transform="translate(1180 660)"/></g>
-<text class="small mono" x="1248" y="595">EMFA</text><text class="small mono" x="1248" y="630">EMFB</text><text class="small mono" x="1248" y="665">EMFC</text><path d="M1320 582L1380 625L1320 688Z" fill="#fff" stroke="#202733" stroke-width="1.6"/><text class="label" x="1340" y="640">LM339</text>
-<path class="bemf" d="M1380 605H1450" marker-end="url(#arrowPurple)"/><path class="bemf" d="M1380 625H1450" marker-end="url(#arrowPurple)"/><path class="bemf" d="M1380 645H1450" marker-end="url(#arrowPurple)"/><text class="label mono" x="1462" y="610" fill="#6f238b">EOA</text><text class="label mono" x="1462" y="630" fill="#6f238b">EOB</text><text class="label mono" x="1462" y="650" fill="#6f238b">EOC</text><text class="small muted" x="1260" y="708" text-anchor="middle">zero-cross detection for sensorless six-step</text>
-<rect x="1120" y="745" width="430" height="135" rx="15" fill="#fff" stroke="#173b8f" stroke-width="1.8"/>
-<text class="section" x="1140" y="775" fill="#173b8f">BUS VOLTAGE SENSING</text><text class="label mono" x="1145" y="820">VM</text><circle class="term" cx="1180" cy="815" r="5"/><path class="wire" d="M1185 815H1230"/><use href="#resistor" transform="translate(1230 815)"/><circle class="node" cx="1290" cy="815" r="4"/><use href="#resistor" transform="translate(1290 815) rotate(90)"/><path class="bus" d="M1290 815H1415" marker-end="url(#arrowBlue)"/><text class="label mono" x="1430" y="821" fill="#173b8f">VAD</text><text class="small muted" x="1430" y="843">to ADC</text>
-<rect class="dash" x="35" y="700" width="360" height="190" rx="14" stroke="#173b8f"/><text class="section" x="55" y="733" fill="#173b8f">INTERFACE SUMMARY</text><text class="small" x="55" y="766">• 6 complementary PWM inputs</text><text class="small" x="55" y="794">• External controller owns PWM timing and dead time</text><text class="small" x="55" y="822">• Three current-feedback channels: ISA / ISB / ISC</text><text class="small" x="55" y="850">• Hall, BEMF zero-cross, and VBUS feedback</text><text class="small" x="55" y="878">• Supports sensorless six-step and FOC</text>
-<text class="tiny muted" x="800" y="960" text-anchor="middle">Hardware architecture overview — controller-independent power stage and sensing interfaces</text>
+<text class="title" x="800" y="70" text-anchor="middle">BLDC / PMSM Power Stage Architecture</text>
+<text class="subtitle" x="800" y="116" text-anchor="middle">6-PWM Gate Drive + Three-Phase Six-Switch Inverter</text>
+
+<text class="section" x="70" y="205" fill="#173b8f">PWM INPUTS</text>
+<text class="small" x="70" y="235">from external controller</text>
+<g class="label mono"><text x="70" y="310">INHA</text><text x="70" y="370">INLA</text><text x="70" y="430">INHB</text><text x="70" y="490">INLB</text><text x="70" y="550">INHC</text><text x="70" y="610">INLC</text></g>
+<g class="sig" marker-end="url(#arrowBlue)"><path d="M150 303H245"/><path d="M150 363H245"/><path d="M150 423H245"/><path d="M150 483H245"/><path d="M150 543H245"/><path d="M150 603H245"/></g>
+<rect class="box" x="250" y="265" width="220" height="390" rx="18"/>
+<text class="section" x="360" y="410" text-anchor="middle" fill="#173b8f">3× Half-Bridge</text>
+<text class="section" x="360" y="445" text-anchor="middle" fill="#173b8f">Gate Driver</text>
+<g class="label mono" fill="#173b8f"><text x="490" y="310">HOA</text><text x="490" y="370">LOA</text><text x="490" y="430">HOB</text><text x="490" y="490">LOB</text><text x="490" y="550">HOC</text><text x="490" y="610">LOC</text></g>
+<g class="sig" marker-end="url(#arrowBlue)"><path d="M470 303H570"/><path d="M470 363H570"/><path d="M470 423H570"/><path d="M470 483H570"/><path d="M470 543H570"/><path d="M470 603H570"/></g>
+
+<rect class="powerbox" x="600" y="180" width="780" height="570" rx="22"/>
+<text class="section" x="990" y="215" text-anchor="middle" fill="#d72c2c">THREE-PHASE POWER STAGE</text>
+<text class="small" x="990" y="244" text-anchor="middle">independent A / B / C half-bridge phase nodes</text>
+<text class="label" x="625" y="285">VM</text><circle class="term" cx="680" cy="278" r="7"/><path class="wire" d="M687 278H1285"/>
+<text class="label" x="625" y="704">GND</text><circle class="term" cx="680" cy="697" r="7"/><path class="wire" d="M687 697H1285"/>
+
+<!-- Phase A -->
+<path class="wire" d="M790 278V315M790 399V460M790 460V500M790 584V610"/>
+<use href="#fet" transform="translate(790 357)"/><use href="#fet" transform="translate(790 542)"/>
+<circle class="node" cx="790" cy="460" r="6"/><path class="wire" d="M790 460H1380"/>
+<text class="label mono" x="820" y="352">QHA</text><text class="label mono" x="820" y="537">QLA</text>
+<text class="label mono" x="860" y="448">MA</text>
+<use href="#vshunt" transform="translate(790 610) scale(.72)"/><text class="small mono" x="820" y="645">R42  1 mΩ</text><path class="wire" d="M790 709V697"/>
+
+<!-- Phase B -->
+<path class="wire" d="M990 278V315M990 399V460M990 460V500M990 584V610"/>
+<use href="#fet" transform="translate(990 357)"/><use href="#fet" transform="translate(990 542)"/>
+<circle class="node" cx="990" cy="460" r="6"/><path class="wire" d="M990 460H1380"/>
+<text class="label mono" x="1020" y="352">QHB</text><text class="label mono" x="1020" y="537">QLB</text>
+<text class="label mono" x="1060" y="448">MB</text>
+<use href="#vshunt" transform="translate(990 610) scale(.72)"/><text class="small mono" x="1020" y="645">R43  1 mΩ</text><path class="wire" d="M990 709V697"/>
+
+<!-- Phase C -->
+<path class="wire" d="M1190 278V315M1190 399V460M1190 460V500M1190 584V610"/>
+<use href="#fet" transform="translate(1190 357)"/><use href="#fet" transform="translate(1190 542)"/>
+<circle class="node" cx="1190" cy="460" r="6"/><path class="wire" d="M1190 460H1380"/>
+<text class="label mono" x="1220" y="352">QHC</text><text class="label mono" x="1220" y="537">QLC</text>
+<text class="label mono" x="1260" y="448">MC</text>
+<use href="#vshunt" transform="translate(1190 610) scale(.72)"/><text class="small mono" x="1220" y="645">R44  1 mΩ</text><path class="wire" d="M1190 709V697"/>
+
+<!-- Distinct outputs, deliberately not tied together -->
+<circle class="term" cx="1410" cy="400" r="7"/><circle class="term" cx="1410" cy="460" r="7"/><circle class="term" cx="1410" cy="520" r="7"/>
+<path class="wire" d="M790 460H1340V400H1403"/><path class="wire" d="M990 460H1403"/><path class="wire" d="M1190 460H1340V520H1403"/>
+<g class="label mono"><text x="1430" y="407">MA → Motor A</text><text x="1430" y="467">MB → Motor B</text><text x="1430" y="527">MC → Motor C</text></g>
+
+<text class="small" x="800" y="825" text-anchor="middle">External controller not shown. Phase nodes MA, MB, and MC are electrically independent.</text>
 </svg>
