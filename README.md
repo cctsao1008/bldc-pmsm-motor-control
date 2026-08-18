@@ -21,6 +21,10 @@ The initial hardware is a three-phase, six-switch BLDC/PMSM inverter with 6-PWM 
 
 ![BLDC / PMSM Power Stage Architecture](docs/images/bldc-pmsm-power-stage-architecture.svg)
 
+The sensing paths are documented separately so that power conversion and controller feedback remain distinct architectural concerns.
+
+![BLDC / PMSM Sensing Architecture](docs/images/bldc-pmsm-sensing-architecture.svg)
+
 | Function | Initial implementation |
 | --- | --- |
 | Power stage | Three-phase, six-switch inverter |
