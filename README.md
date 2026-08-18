@@ -17,35 +17,9 @@ The project emphasizes reproducible measurements, independent firmware developme
 
 ## System
 
-The initial hardware is a three-phase, six-switch BLDC/PMSM inverter with 6-PWM gate control and multiple feedback paths.
+The initial hardware is a three-phase, six-switch BLDC/PMSM inverter with 6-PWM gate control and multiple feedback paths. The controller itself is intentionally kept outside the hardware boundary: the power stage exposes PWM inputs and sensing outputs to an external controller implementation.
 
-```text
-                       ┌─────────────────┐
-                       │       MCU       │
-                       └────────┬────────┘
-                                │
-                         6-PWM Gate Drive
-                                │
-                                ▼
-                    ┌───────────────────────┐
-                    │ Three-Phase Inverter  │
-                    └───────────┬───────────┘
-                                │
-                          MA / MB / MC
-                                │
-                                ▼
-                         BLDC / PMSM
-                                │
-             ┌──────────────────┼──────────────────┐
-             │                  │                  │
-             ▼                  ▼                  ▼
-       Phase Current          Hall              BEMF
-        INA181 ×3           Feedback          Feedback
-             │                  │                  │
-             └──────────────────┼──────────────────┘
-                                ▼
-                               MCU
-```
+![BLDC / PMSM Power Stage Architecture](docs/images/bldc-pmsm-power-stage-architecture.svg)
 
 | Function | Initial implementation |
 | --- | --- |
