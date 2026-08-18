@@ -19,11 +19,11 @@ The project emphasizes reproducible measurements, independent firmware developme
 
 The initial hardware is a three-phase, six-switch BLDC/PMSM inverter with 6-PWM gate control and multiple feedback paths. The controller itself is intentionally kept outside the hardware boundary: the power stage exposes PWM inputs and sensing outputs to an external controller implementation.
 
-![BLDC / PMSM Power Stage Architecture](docs/images/bldc-pmsm-power-stage-architecture.svg)
+<!-- ![BLDC / PMSM Power Stage Architecture](docs/images/bldc-pmsm-power-stage-architecture.svg) -->
 
 The sensing paths are documented separately so that power conversion and controller feedback remain distinct architectural concerns.
 
-![BLDC / PMSM Sensing Architecture](docs/images/bldc-pmsm-sensing-architecture.svg)
+<!-- ![BLDC / PMSM Sensing Architecture](docs/images/bldc-pmsm-sensing-architecture.svg) -->
 
 | Function | Initial implementation |
 | --- | --- |
