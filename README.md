@@ -21,11 +21,9 @@ The project emphasizes reproducible measurements, independent firmware developme
 
 The initial hardware is a three-phase, six-switch BLDC/PMSM inverter with 6-PWM gate control and multiple feedback paths. The controller itself is intentionally kept outside the hardware boundary: the power stage exposes PWM inputs and sensing outputs to an external controller implementation.
 
-<!-- ![BLDC / PMSM Power Stage Architecture](docs/images/bldc-pmsm-power-stage-architecture.svg) -->
+![Three-Phase Inverter Circuit](docs/images/three_phase_inverter_circuit_schematic.png)
 
 The sensing paths are documented separately so that power conversion and controller feedback remain distinct architectural concerns.
-
-<!-- ![BLDC / PMSM Sensing Architecture](docs/images/bldc-pmsm-sensing-architecture.svg) -->
 
 | Function | Initial implementation |
 | --- | --- |
@@ -47,11 +45,15 @@ See [Hardware Overview](docs/hardware-overview.md) for the detailed board-level 
 
 Uses the floating phase back-EMF signal to detect zero crossings and derive commutation timing after an open-loop startup sequence.
 
+![Back-EMF Comparator Circuit](docs/images/back_emf_comparator_circuit_schematic.png)
+
 See [Sensorless Six-Step Control](docs/sensorless-six-step.md).
 
 ### Field-Oriented Control
 
 Uses synchronized phase-current sampling, Clarke/Park transforms, `Id` / `Iq` current control, and SVPWM. Rotor electrical angle may initially come from Hall sensors or an external encoder, with sensorless estimation treated as a later extension.
+
+![Current Sensing Circuit](docs/images/current_sensing_circuit_schematic.png)
 
 See [Field-Oriented Control](docs/foc.md).
 
