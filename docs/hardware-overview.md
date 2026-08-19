@@ -55,6 +55,14 @@ The power stage is a three-phase, six-switch inverter:
 
 The operating ratings above are vendor-stated values for the initial board and should be distinguished from schematic-derived electrical facts. They do not constrain later controller implementations.
 
+## Power Regulation
+
+The board includes the local step-down regulation required to derive the logic and gate-drive supply rails from the input bus.
+
+![Step-Down Regulation](images/step_down_regulation_schematic.png)
+
+This regulation circuitry is part of the vendor-validated hardware baseline. Controller integration should verify the expected rails are present and stable, but does not treat the regulator design itself as a development target unless measurements indicate a hardware issue.
+
 ## PWM / Gate Drive
 
 The board exposes independent high-side and low-side control for each phase:
