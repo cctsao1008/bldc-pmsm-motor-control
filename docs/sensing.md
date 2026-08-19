@@ -2,14 +2,16 @@
 
 The initial board exposes four sensing paths relevant to motor control: three-phase current, back-EMF, Hall feedback, and DC-bus voltage.
 
+The board is treated as a vendor-validated, known-good hardware baseline. The sensing work in this project therefore focuses on controller-side acquisition, scaling, timing, calibration, and interpretation of these signals.
+
 ## Phase-Current Sensing
 
 The board uses three independent low-side shunts:
 
 ```text
-Phase A → R42 = 1 mΩ → GND
-Phase B → R43 = 1 mΩ → GND
-Phase C → R44 = 1 mΩ → GND
+Phase A → R42 = 5 mΩ → GND
+Phase B → R43 = 5 mΩ → GND
+Phase C → R44 = 5 mΩ → GND
 ```
 
 Each shunt is measured by an INA181A1 current-sense amplifier:
@@ -28,7 +30,7 @@ REF1V65 = 1.65 V
 
 as the zero-current reference.
 
-Actual offset, gain, ADC scaling, amplifier error, shunt tolerance, switching interference, and temperature drift must be measured and calibrated.
+Actual offset, gain, ADC scaling, amplifier error, shunt tolerance, switching interference, and temperature drift must be measured and calibrated at the controller level.
 
 ### PWM-Synchronized Sampling
 
@@ -62,7 +64,7 @@ provides a useful measurement-consistency check. A non-zero residual can indicat
 
 ## Back-EMF Sensing
 
-The three phase nodes provide analog back-EMF related signals:
+The three phase nodes provide analog back-EMF-related signals:
 
 ```text
 MA → EMFA
@@ -70,12 +72,22 @@ MB → EMFB
 MC → EMFC
 ```
 
-A comparator stage based on the LM339 provides corresponding digital outputs:
+The board also provides a common virtual-neutral/reference signal, `VN`, used by the back-EMF comparator stage.
+
+Conceptually:
 
 ```text
-EMFA → EOA
-EMFB → EOB
-EMFC → EOC
+MA / MB / MC
+     ↓
+Phase-derived BEMF signals
+     ↓
+EMFA / EMFB / EMFC
+     │
+     ├── analog observation
+     │
+VN ──┴── LM339 comparison
+             ↓
+         EOA / EOB / EOC
 ```
 
 These signals form the hardware basis for sensorless six-step zero-cross detection and commutation timing.
@@ -92,13 +104,7 @@ HALLB
 HALLC
 ```
 
-Hall feedback can be used for:
-
-- sensored six-step commutation;
-- rotor-sector validation;
-- startup characterization;
-- comparison with BEMF-derived position information;
-- initial electrical-angle reference experiments.
+These provide discrete rotor-position feedback to the controller. Their exact phase/sector mapping, polarity, and timing relationship should be established during controller integration before being used by sensored commutation or rotor-angle logic.
 
 ## DC-Bus Voltage Sensing
 
