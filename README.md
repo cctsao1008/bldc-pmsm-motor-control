@@ -57,35 +57,27 @@ Uses synchronized phase-current sampling, Clarke/Park transforms, `Id` / `Iq` cu
 
 See [Field-Oriented Control](docs/foc.md).
 
-## Documentation
-
-Detailed engineering notes are kept under [`docs/`](docs/) so the README remains a project landing page.
-
-- [Design Principles](docs/design.md) — physical-plant-first development and measurement-driven validation.
-- [Software Architecture](docs/software-architecture.md) — separation of PWM/ADC/timing from sensing, motor state, control algorithms, and supervision.
-- [Hardware Overview](docs/hardware-overview.md) — power stage, gate drive, interfaces, and nominal board parameters.
-- [Electrical Connectivity Baseline](docs/electrical-connectivity.md) — project-maintained connectivity reference extracted from the known-good vendor hardware.
-- [Sensing Architecture](docs/sensing.md) — phase-current, BEMF, Hall, and DC-bus voltage sensing.
-- [Hardware Bring-Up](docs/bring-up.md) — staged controller-to-hardware integration from power rails through closed-loop motor control.
-- [Sensorless Six-Step Control](docs/sensorless-six-step.md) — startup, BEMF qualification, zero-cross detection, and commutation timing.
-- [Field-Oriented Control](docs/foc.md) — current acquisition, transforms, current loops, rotor angle, and SVPWM.
-- [Validation and Benchmarking](docs/validation.md) — common measurements and comparison criteria.
-- [Safety](docs/safety.md) — electrical, switching, regenerative, and measurement safety considerations.
-
 ## Reference Baseline
 
 Existing vendor material provides a known-good hardware and firmware reference based on STM32F405/VESC-derived firmware, ESP32/SimpleFOC, AT32 sensorless six-step control, and STM32F103 motor-control examples.
 
 The vendor-validated board and its original schematic/documentation form the initial hardware reference baseline. Vendor firmware and third-party implementations are used for comparison and bring-up reference rather than as the architectural basis of the project's independent controller implementation.
 
+Vendor reference material is organized under [`references/vendor/`](references/vendor/).
+
 Vendor firmware, documentation, and third-party source code are not redistributed unless their respective licenses explicitly permit redistribution.
 
-## Status
+## Documentation
 
-Early-stage project.
+Detailed engineering notes are kept under [`docs/`](docs/) so the README remains a project landing page.
 
-Current focus: **controller integration, power-stage characterization, sensing validation, and establishment of a measured baseline before independent sensorless six-step and FOC development.**
-
-## License
-
-To be determined.
+- [Hardware Overview](docs/hardware-overview.md) — power stage, gate drive, interfaces, and nominal board parameters.
+- [Electrical Connectivity Baseline](docs/electrical-connectivity.md) — project-maintained connectivity reference extracted from the known-good vendor hardware.
+- [Sensing Architecture](docs/sensing.md) — phase-current, BEMF, Hall, and DC-bus voltage sensing.
+- [Design Principles](docs/design.md) — physical-plant-first development and measurement-driven validation.
+- [Software Architecture](docs/software-architecture.md) — separation of PWM/ADC/timing from sensing, motor state, control algorithms, and supervision.
+- [Hardware Bring-Up](docs/bring-up.md) — staged controller-to-hardware integration from power rails through closed-loop motor control.
+- [Sensorless Six-Step Control](docs/sensorless-six-step.md) — startup, BEMF qualification, zero-cross detection, and commutation timing.
+- [Field-Oriented Control](docs/foc.md) — current acquisition, transforms, current loops, rotor angle, and SVPWM.
+- [Validation and Benchmarking](docs/validation.md) — common measurements and comparison criteria.
+- [Safety](docs/safety.md) — electrical, switching, regenerative, and measurement safety considerations.
