@@ -4,9 +4,11 @@ Embedded motor-control development project for BLDC and PMSM drives, covering se
 
 ## Why This Project
 
-The initial hardware platform is an existing three-phase inverter board with gate drivers, three-shunt low-side current sensing, Hall inputs, back-EMF sensing, and DC-bus voltage feedback.
+The initial hardware platform is a vendor-validated, known-good three-phase inverter board with gate drivers, three-shunt low-side current sensing, Hall inputs, back-EMF sensing, and DC-bus voltage feedback.
 
-The objective is not simply to make a motor spin or reproduce vendor firmware. The board is used as a real physical motor-control platform for understanding how switching hardware, sensing, timing, estimation, commutation, and closed-loop control interact.
+The objective is not simply to make a motor spin or reproduce vendor firmware. The board is used as a stable physical motor-control platform for understanding how switching hardware, sensing, timing, estimation, commutation, and closed-loop control interact.
+
+By starting from known-good power hardware, development effort can focus on controller implementation, sensing, timing, commutation, and control algorithms rather than power-electronics hardware bring-up.
 
 Two primary control paths are developed on the same hardware:
 
@@ -30,7 +32,7 @@ The sensing paths are documented separately so that power conversion and control
 | Power stage | Three-phase, six-switch inverter |
 | Input voltage | 12–36 VDC |
 | PWM interface | 6-PWM |
-| Current sensing | INA181A1 ×3 with 1 mΩ low-side shunts |
+| Current sensing | INA181A1 ×3 with 5 mΩ low-side shunts |
 | Hall feedback | HALLA / HALLB / HALLC |
 | BEMF feedback | EMFA / EMFB / EMFC + LM339 |
 | Bus-voltage feedback | VAD |
@@ -60,8 +62,9 @@ Detailed engineering notes are kept under [`docs/`](docs/) so the README remains
 - [Design Principles](docs/design.md) — physical-plant-first development and measurement-driven validation.
 - [Software Architecture](docs/software-architecture.md) — separation of PWM/ADC/timing from sensing, motor state, control algorithms, and supervision.
 - [Hardware Overview](docs/hardware-overview.md) — power stage, gate drive, interfaces, and nominal board parameters.
+- [Electrical Connectivity Baseline](docs/electrical-connectivity.md) — project-maintained connectivity reference extracted from the known-good vendor hardware.
 - [Sensing Architecture](docs/sensing.md) — phase-current, BEMF, Hall, and DC-bus voltage sensing.
-- [Hardware Bring-Up](docs/bring-up.md) — staged bring-up from power rails through closed-loop motor control.
+- [Hardware Bring-Up](docs/bring-up.md) — staged controller-to-hardware integration from power rails through closed-loop motor control.
 - [Sensorless Six-Step Control](docs/sensorless-six-step.md) — startup, BEMF qualification, zero-cross detection, and commutation timing.
 - [Field-Oriented Control](docs/foc.md) — current acquisition, transforms, current loops, rotor angle, and SVPWM.
 - [Validation and Benchmarking](docs/validation.md) — common measurements and comparison criteria.
@@ -69,15 +72,17 @@ Detailed engineering notes are kept under [`docs/`](docs/) so the README remains
 
 ## Reference Baseline
 
-Existing vendor material provides known-working references based on STM32F405/VESC-derived firmware, ESP32/SimpleFOC, AT32 sensorless six-step control, and STM32F103 motor-control examples.
+Existing vendor material provides a known-good hardware and firmware reference based on STM32F405/VESC-derived firmware, ESP32/SimpleFOC, AT32 sensorless six-step control, and STM32F103 motor-control examples.
 
-These are treated as reference implementations rather than the architectural basis of the project. Vendor firmware, documentation, and third-party source code are not redistributed unless their respective licenses explicitly permit redistribution.
+The vendor-validated board and its original schematic/documentation form the initial hardware reference baseline. Vendor firmware and third-party implementations are used for comparison and bring-up reference rather than as the architectural basis of the project's independent controller implementation.
+
+Vendor firmware, documentation, and third-party source code are not redistributed unless their respective licenses explicitly permit redistribution.
 
 ## Status
 
 Early-stage project.
 
-Current focus: **hardware documentation, power-stage characterization, sensing validation, and establishment of a known-good baseline before independent sensorless six-step and FOC development.**
+Current focus: **controller integration, power-stage characterization, sensing validation, and establishment of a measured baseline before independent sensorless six-step and FOC development.**
 
 ## License
 
