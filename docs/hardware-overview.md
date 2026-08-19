@@ -1,6 +1,8 @@
 # Hardware Overview
 
-The initial platform is a three-phase BLDC/PMSM inverter board intended for external-MCU control.
+The initial platform is a vendor-validated, known-good three-phase BLDC/PMSM inverter board intended for external-MCU control.
+
+The board is treated as the project's initial hardware baseline. The development focus is therefore controller integration, measurement, and control behavior rather than redesigning the power stage.
 
 ## Power Stage
 
@@ -18,26 +20,22 @@ The power stage is a three-phase, six-switch inverter:
       Q2        Q4        Q6
        │         │         │
      R42       R43       R44
-     1 mΩ      1 mΩ      1 mΩ
+     5 mΩ      5 mΩ      5 mΩ
        │         │         │
       GND       GND       GND
 ```
 
-Nominal board data:
+### Schematic-Derived Hardware Data
 
 | Parameter | Value |
 | --- | --- |
 | Motor type | BLDC / PMSM |
 | Power-stage topology | Three-phase, six-switch inverter |
-| Input voltage | 12–36 VDC |
-| Continuous output current | 10 A |
-| Maximum output current | 20 A |
-| Nominal maximum power | 500 W |
 | Main MOSFET | HYG065N07 ×6 |
 | PWM interface | 6-PWM |
 | Phase current sensing | Three-shunt low-side |
 | Current-sense amplifier | INA181A1 ×3 |
-| Current shunt | 1 mΩ ×3 |
+| Current shunt | 5 mΩ ×3 |
 | Current-sense reference | 1.65 V |
 | Hall feedback | HALLA / HALLB / HALLC |
 | Back-EMF sensing | EMFA / EMFB / EMFC |
@@ -46,7 +44,16 @@ Nominal board data:
 | DC-bus voltage feedback | VAD |
 | MCU | External |
 
-These values describe the initial hardware reference and do not constrain later controller implementations.
+### Vendor-Stated Operating Data
+
+| Parameter | Value |
+| --- | --- |
+| Input voltage | 12–36 VDC |
+| Continuous output current | 10 A |
+| Maximum output current | 20 A |
+| Nominal maximum power | 500 W |
+
+The operating ratings above are vendor-stated values for the initial board and should be distinguished from schematic-derived electrical facts. They do not constrain later controller implementations.
 
 ## PWM / Gate Drive
 
@@ -60,7 +67,7 @@ Phase C: INHC / INLC
 
 The external MCU is responsible for complementary PWM generation, dead time, timer synchronization, ADC trigger timing, safe disabled states, and fault shutdown behavior.
 
-The hardware should be characterized from MCU output through the full switching chain:
+Because the power board is already known-good, controller bring-up should concentrate on verifying the controller-to-board interface:
 
 ```text
 MCU PWM
@@ -72,7 +79,7 @@ MOSFET Gate
 Phase Switching Node
 ```
 
-PWM polarity and effective dead time must be verified on hardware before normal motor operation.
+PWM polarity, effective dead time, enable/disable behavior, and switching timing must be confirmed with the intended controller before normal motor operation.
 
 ## Motor Outputs
 
@@ -84,7 +91,7 @@ MB
 MC
 ```
 
-Phase order and rotation direction must be verified during bring-up rather than assumed from labeling alone.
+Phase order and rotation direction must be verified during controller integration rather than assumed from labeling alone.
 
 ## External MCU Interface
 
