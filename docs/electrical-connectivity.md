@@ -1,8 +1,10 @@
 # Electrical Connectivity Baseline
 
-This document defines the electrical connectivity that must be preserved by future KiCad schematics and exported README figures.
+This document defines the project-maintained electrical connectivity baseline extracted from the vendor-validated, known-good motor-control hardware.
 
-The intent is to separate **electrical correctness** from presentation. The KiCad schematic should be treated as the source of truth; README SVGs are presentation artifacts derived from the verified schematic.
+The original vendor board schematic and board documentation are the initial hardware reference sources. Project KiCad schematics and exported README figures are maintained documentation artifacts derived from that verified hardware baseline.
+
+The intent is to separate **electrical correctness** from presentation. Any reconstructed KiCad schematic must first be checked against the original hardware documentation before it is treated as a maintained project connectivity reference.
 
 ## Three-Phase Power Stage
 
@@ -70,6 +72,8 @@ LOC -> QLC.G
 
 Each INA181A1 channel measures the differential voltage across its corresponding low-side shunt.
 
+The following polarity assignments are documentation targets and must remain consistent with the original board schematic when reconstructed in KiCad.
+
 ### Phase A
 
 ```text
@@ -108,6 +112,7 @@ REF1V65 = approximately 1.65 V
 - INA181A1 inputs must be shown across the shunt, not in series with the phase-current path.
 - `REF1V65` must connect to the `REF` pin of all three current-sense amplifiers.
 - `ISA`, `ISB`, and `ISC` are amplifier outputs routed to controller ADC inputs.
+- `IN+` / `IN-` polarity in reconstructed documentation must match the original board schematic.
 
 ## Hall Interface
 
@@ -119,7 +124,7 @@ V_HALL -> Hall sensor supply
 GND -> Hall sensor ground
 ```
 
-Where the Hall supply is configured as 5 V or 3.3 V, the schematic should keep `V_HALL` as the functional net name and annotate the configured voltage separately.
+`V_HALL` is a documentation-level functional name for the Hall-sensor supply. On the initial controller-board implementation, the Hall interface is supplied from +5 V; future controller implementations may expose the same function differently.
 
 ## Back-EMF Sensing
 
@@ -131,21 +136,21 @@ MB -> EMFB -> LM339 comparator channel B -> EOB
 MC -> EMFC -> LM339 comparator channel C -> EOC
 ```
 
-Each comparator channel compares its phase-derived signal against the board's common zero-cross reference / virtual-neutral reference.
+Each comparator channel compares its phase-derived signal against the board's common virtual-neutral/reference signal, `VN`.
 
 Conceptually:
 
 ```text
 EMFA -> comparator A input
-VREF/VN -> comparator A reference input
+VN   -> comparator A reference input
 comparator A output -> EOA
 
 EMFB -> comparator B input
-VREF/VN -> comparator B reference input
+VN   -> comparator B reference input
 comparator B output -> EOB
 
 EMFC -> comparator C input
-VREF/VN -> comparator C reference input
+VN   -> comparator C reference input
 comparator C output -> EOC
 ```
 
@@ -184,11 +189,11 @@ GND
 
 ## Schematic / Figure Workflow
 
-1. Build the circuit in KiCad using standard schematic symbols.
-2. Verify pin-level connectivity and junctions.
-3. Run ERC where applicable.
-4. Review the schematic against this connectivity baseline and the original board schematic.
+1. Start from the original vendor board schematic and board documentation.
+2. Reconstruct or simplify the circuit in KiCad using standard schematic symbols where useful for project documentation.
+3. Verify pin-level connectivity, polarity, junctions, and functional net mapping against the original hardware reference.
+4. Run ERC where applicable.
 5. Export the verified schematic or simplified documentation view to SVG.
-6. Use the SVG in the README.
+6. Use the SVG in the README or detailed documentation.
 
-The README image should never become the source of truth for electrical connectivity.
+The README image and reconstructed KiCad schematic must not supersede the original hardware reference unless the project intentionally creates and validates a new hardware revision.
